@@ -2,6 +2,10 @@
     <!-- #region Jssor Slider Begin -->
     <!-- Generator: Jssor Slider Maker -->
     <!-- Source: https://www.jssor.com -->
+    <?php 
+        include "settings.php";
+    ?>
+<br /><br /><br /><br />
     <script src="jssor.slider.min.js" type="text/javascript"></script>
     <script type="text/javascript">
         jssor_1_slider_init = function() {
@@ -34,7 +38,7 @@
 
             /*#region responsive code begin*/
 
-            var MAX_WIDTH = 480;
+            var MAX_WIDTH = <?php echo $MAX_WIDTH_SLIDER; ?>;
 
             function ScaleSlider() {
                 var containerElement = jssor_1_slider.$Elmt.parentNode;
@@ -86,25 +90,24 @@
         .jssora061.jssora061ds {opacity:.3;pointer-events:none;}
     </style>
 
-<?php /* Database connection */
-    $pol= mysql_connect('host' , 'login' , 'password');
+<?php
+    
+    $pol= mysql_connect($DB_HOST , $DB_LOGIN , $DB_PASSWORD);
     if($pol)
     {
-        $baza=mysql_select_db('yourDB');
+        $baza=mysql_select_db($DB_NAME);
         if($baza){ }
         else
-            echo 'Error 1: '.mysql_error();
+            echo 'Data base error1: '.mysql_error();
     }    
     else
-        echo 'Error 2: '.mysql_error();
-        /*chosing 3 records from database: slide 1,slide 2 and slide 3
-        "slider2" - table name in database
-        */
-        $record1=mysql_query("SELECT * FROM slider2 WHERE id=1");
+        echo 'Data base error2: '.mysql_error();
+
+        $record1=mysql_query("SELECT * FROM $DB_TABLE_NAME WHERE id=1");
         $slide1 = mysql_fetch_array($record1);
-        $record2=mysql_query("SELECT * FROM slider2 WHERE id=2");
+        $record2=mysql_query("SELECT * FROM $DB_TABLE_NAME WHERE id=2");
         $slide2 = mysql_fetch_array($record2);
-        $record3=mysql_query("SELECT * FROM slider2 WHERE id=3");
+        $record3=mysql_query("SELECT * FROM $DB_TABLE_NAME WHERE id=3");
         $slide3 = mysql_fetch_array($record3);
     ?>
     
@@ -123,27 +126,21 @@
         </div>
         <div data-u="slides" style="cursor:default;position:relative;top:0px;left:0px;width:480px;height:400px;overflow:hidden;">
             <div>
-            <!--
-                "link", "title" and "zdjecie" are defined in field in the database
-                "link" - link for full news. Remember about Http://www.
-                "tytul"- slide title
-                "zdjecie" - slide photo
-                -->
-                <a href="<?php echo $slide1['link']; ?>">
-                <img data-u="image" src="<?php echo $slide1['zdjecie']; ?>" /></a>
-                <div data-u="thumb"><?php echo $slide1['tytul']; ?></div>
+                <a href="<?php echo $slide1[$LINK_DB_NAME]; ?>">
+                <img data-u="image" src="<?php echo $slide1[$PICTURE_DB_NAME]; ?>" /></a>
+                <div data-u="thumb"><?php echo $slide1[$TITLE_DB_NAME]; ?></div>
             
             </div>
             <div>
-                <a href="<?php echo $slide2['link']; ?>">
-                <img data-u="image" src="<?php echo $slide2['zdjecie']; ?>" /></a>
-                <div data-u="thumb"><?php echo $slide2['tytul']; ?></div>
+                <a href="<?php echo $slide2[$LINK_DB_NAME]; ?>">
+                <img data-u="image" src="<?php echo $slide2[$PICTURE_DB_NAME]; ?>" /></a>
+                <div data-u="thumb"><?php echo $slide2[$TITLE_DB_NAME]; ?></div>
             
             </div>
             <div>
-                <a href="<?php echo $slide3['link']; ?>">
-                <img data-u="image" src="<?php echo $slide3['zdjecie']; ?>" /></a>
-                <div data-u="thumb"><?php echo $slide3['tytul']; ?></div>
+                <a href="<?php echo $slide3[$LINK_DB_NAME]; ?>">
+                <img data-u="image" src="<?php echo $slide3[$PICTURE_DB_NAME]; ?>" /></a>
+                <div data-u="thumb"><?php echo $slide3[$TITLE_DB_NAME]; ?></div>
             
             </div>
 
@@ -172,3 +169,7 @@
     </div>
     <script type="text/javascript">jssor_1_slider_init();</script>
     <!-- #endregion Jssor Slider End -->
+    <br /><a href="sliderCMS.php"> slider CMS </a>
+<?php
+mysql_close($pol);
+?>

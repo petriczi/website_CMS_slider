@@ -1,0 +1,12 @@
+<?php
+$MAX_WIDTH_SLIDER=480;
+$TITLE_DB_NAME='title';
+$PICTURE_DB_NAME='picture';
+$LINK_DB_NAME='link';
+$TABLE_DB_NAME='slider2';
+$DB_HOST='';
+$DB_LOGIN='';
+$DB_NAME='';
+$DB_PASSWORD='';
+$DB_TABLE_NAME='';
+?>
